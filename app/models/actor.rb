@@ -11,28 +11,36 @@
 #  updated_at :datetime         not null
 #
 class Actor < ApplicationRecord
-  def characters
-    my_id = self.id
+  has_many(:characters, {
+    :class_name => "Character",
+    :foreign_key => "actor_id"
+  })
 
-    matching_characters = Character.where({ :actor_id => my_id })
+  # def characters
+  #   my_id = self.id
 
-    return matching_characters
-  end
+  #   matching_characters = Character.where({ :actor_id => my_id })
 
-  def filmography
-    array_of_movie_ids = Array.new
+  #   return matching_characters
+  # end
 
-    my_characters = self.characters
+  has_many(:characters)
+  has_many(:filmography, :through => :characters, :source => :movie)
 
-    my_characters.each do |a_character|
-      the_movie = a_character.movie
+  # def filmography
+  #   array_of_movie_ids = Array.new
 
-      array_of_movie_ids.push(the_movie.id)
-    end
+  #   my_characters = self.characters
 
-    matching_movies = Movie.where({ :id => array_of_movie_ids })
+  #   my_characters.each do |a_character|
+  #     the_movie = a_character.movie
 
-    return matching_movies
-  end
+  #     array_of_movie_ids.push(the_movie.id)
+  #   end
+
+  #   matching_movies = Movie.where({ :id => array_of_movie_ids })
+
+  #   return matching_movies
+  # end
 
 end

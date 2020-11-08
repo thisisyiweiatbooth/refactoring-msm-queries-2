@@ -10,13 +10,16 @@
 #  movie_id   :integer
 #
 class Character < ApplicationRecord
-  def movie
-    my_movie_id = self.movie_id
+  belongs_to(:movie, { :class_name => "Movie", :foreign_key => "movie_id"})
 
-    matching_movies = Movie.where({ :id => my_movie_id })
 
-    the_movie = matching_movies.at(0)
+  # def movie
+  #   my_movie_id = self.movie_id
 
-    return the_movie
-  end
+  #   matching_movies = Movie.where({ :id => my_movie_id })
+
+  #   the_movie = matching_movies.at(0)
+
+  #   return the_movie
+  # end
 end
